@@ -79,4 +79,22 @@
   body {
     @apply bg-background text-foreground;
   }
+  .skeleton {
+    @apply bg-gray-200 relative overflow-hidden;
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150px;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 1s infinite;
+  }
+  @keyframes shimmer {
+    100% {
+      left: 100%;
+    }
+  }
 }

@@ -4,16 +4,22 @@ export interface IVenue extends Document {
   name: string;
   googleLink: string;
   websiteLink?: string;
-  category: string[];
-  address: string;
-  openHours: string;
-  phoneNumber: string;
-  reviewCount: number;
-  reviewRating: number;
-  latitude: number;
-  longitude: number;
-  description: string;
-  venueImage: string;
+  category?: string;
+  address?: string;
+  openHours?: string;
+  phoneNumber?: string;
+  reviewCount?: number;
+  reviewRating?: number;
+  // latitude: number;
+  // longitude: number;
+  location: {
+    type: 'Point';
+    coordinates: [number, number]; // [lon, lat]
+  };
+  // cid: string;
+  description?: string;
+  venueImage?: string;
+  reviewsLink?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,23 +27,37 @@ export interface IVenue extends Document {
 const VenueSchema = new Schema<IVenue>(
   {
     name: { type: String, required: true },
-    googleLink: { type: String, required: true },
+    googleLink: { type: String},
     websiteLink: { type: String },
-    category: [{ type: String }],
-    address: { type: String, required: true },
-    openHours: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    category: { type: String },
+    address: { type: String},
+    openHours: { type: String},
+    phoneNumber: { type: String },
     reviewCount: { type: Number, default: 0 },
     reviewRating: { type: Number, default: 0 },
-    latitude: { type: Number, required: true },
-    longitude: { type: Number, required: true },
-    description: { type: String, required: true },
-    venueImage: { type: String, required: true },
+    // latitude: { type: Number, required: true },
+    // longitude: { type: Number, required: true },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        required: true,
+        default: 'Point'
+      },
+      coordinates: {
+        type: [Number],   // [ longitude, latitude ]
+        required: true
+      }
+    },
+    // cid: { type: String },
+    description: { type: String},
+    venueImage: { type: String},
+    reviewsLink: { type: String },
   },
   { timestamps: true }
 );
 
-// Create a geospatial index for location-based queries
-VenueSchema.index({ latitude: 1, longitude: 1 });
+// Create a 2dsphere index on location
+VenueSchema.index({ location: '2dsphere' });
 
 export default mongoose.models.Venue || mongoose.model<IVenue>('Venue', VenueSchema);

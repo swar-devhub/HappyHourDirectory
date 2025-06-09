@@ -33,3 +33,25 @@ export interface LocationSuggestion {
     country?: string;
   };
 }
+
+export interface GeoPoint {
+  type: "Point";
+  coordinates: [number, number]; // [longitude, latitude]
+}
+
+export interface VenueDisplay {
+  address : string;
+  calculatedDistance: number;
+  category: string;
+  googleLink: string;
+  location: GeoPoint;
+  name: string;
+  openHours: string;
+  phoneNumber: string;
+  reviewCount: number;
+  reviewRating: number;
+  reviewsLink: string;
+  venueImage: string;
+  _id: string;
+}
+

@@ -11,7 +11,7 @@ import { LocationSuggestion } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 
 interface LocationAutocompleteProps {
-  onLocationSelect: (location: string, coordinates?: { lat: number; lon: number }) => void;
+  onLocationSelect: (location: string, coordinates: { lat: number; lon: number }) => void;
   placeholder?: string;
   initialValue?: string;
 }
@@ -153,7 +153,7 @@ export function LocationAutocomplete({
             <DialogTitle>Enable Location Services</DialogTitle>
             <DialogDescription>
               Allow us to access your location to find the best happy hours near you. 
-              We'll only use your location to show relevant results.
+              We&apos;ll only use your location to show relevant results.
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end space-x-2">
